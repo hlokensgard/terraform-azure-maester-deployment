@@ -22,3 +22,4 @@ Install-MaesterTests .\tests
 Write-Output "Running Maester tests"
 Write-Output "Sending report to $MailRecipient"
 Invoke-Maester -MailUserId $MailRecipient -MailRecipient $MailRecipient -OutputFolder $TempOutputFolder
+Write-Output "Maester tests completed"
