@@ -13,6 +13,6 @@ resource "azurerm_automation_variable_string" "this" {
   resource_group_name     = azurerm_automation_account.this.resource_group_name
   automation_account_name = azurerm_automation_account.this.name
   description             = each.value.description
-  encrypted               = true
+  encrypted               = false
   value                   = each.value.value
 }
