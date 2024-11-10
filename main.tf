@@ -81,7 +81,7 @@ resource "azurerm_automation_runbook" "this" {
   automation_account_name = azurerm_automation_account.this.name
   log_verbose             = "true"
   log_progress            = "true"
-  description             = "Measter runbook"
+  description             = "Maester runbook"
   runbook_type            = "PowerShell72"
 
   publish_content_link {
