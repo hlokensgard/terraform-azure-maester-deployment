@@ -1,4 +1,4 @@
-# terraform-azure-maester-deployment
+# Terraform deployment of Maester
 A terraform module for deploying the maester tool.
 
 
