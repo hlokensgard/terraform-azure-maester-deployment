@@ -1,4 +1,7 @@
 data "azurerm_storage_account_blob_container_sas" "this" {
+  depends_on = [
+    time_sleep.wait_for_role_assignments
+  ]
   connection_string = azurerm_storage_account.this.primary_connection_string
   container_name    = azurerm_storage_container.this.name
   https_only        = true
