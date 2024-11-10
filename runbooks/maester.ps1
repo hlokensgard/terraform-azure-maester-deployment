@@ -19,4 +19,6 @@ cd $env:TEMP
 md maester-tests
 cd maester-tests
 Install-MaesterTests .\tests
+Write-Output "Running Maester tests"
+Write-Output "Sending report to $MailRecipient"
 Invoke-Maester -MailUserId $MailRecipient -MailRecipient $MailRecipient -OutputFolder $TempOutputFolder
