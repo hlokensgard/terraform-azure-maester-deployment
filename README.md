@@ -2,6 +2,23 @@
 This terraform module deploys the Maester tool. It will create an automation account that runs the tool as a runbook and sends the report on email. 
 For more information about the tool, check out the [website](https://maester.dev/).
 
+# Prerequiteis 
+The module requres that you have a folder named `runbooks` and a file named `maester.ps1` on the same level as the `main.tf` file. 
+```
+- runbooks
+  - maester.ps1
+- main.tf
+- ...
+```
+
+# Example of use 
+```
+module "maester-deployment" {
+  source  = "hlokensgard/maester-deployment/azure"
+  version = "~>1.0"
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -52,9 +69,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the | `string` | n/a | yes |
-| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The subscription ID for the Azure account | `string` | n/a | yes |
 | <a name="input_automation_account_name"></a> [automation\_account\_name](#input\_automation\_account\_name) | The name of the Automation account | `string` | `"aa-maester"` | no |
+| <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `""` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group | `string` | `"rg-maester"` | no |
 | <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account | `string` | `"maester"` | no |

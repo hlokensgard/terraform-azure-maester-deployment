@@ -1,8 +1,3 @@
-variable "subscription_id" {
-  description = "The subscription ID for the Azure account"
-  type        = string
-}
-
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
@@ -42,6 +37,7 @@ variable "automation_account_name" {
 }
 
 variable "email_address" {
-  description = "The email address of the user that will receive the"
+  description = "The email address of the user that will receive the reports"
   type        = string
+  default     = ""
 }
