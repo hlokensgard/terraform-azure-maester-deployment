@@ -70,8 +70,8 @@ resource "azurerm_storage_blob" "this" {
   storage_account_name   = azurerm_storage_account.this.name
   storage_container_name = azurerm_storage_container.this.name
   type                   = "Block"
-  source                 = "runbooks/maester.ps1"
-  content_md5            = filemd5("runbooks/maester.ps1")
+  source                 = var.file_path
+  content_md5            = filemd5(var.file_path)
 }
 
 resource "azurerm_automation_runbook" "this" {
@@ -90,10 +90,13 @@ resource "azurerm_automation_runbook" "this" {
 }
 
 resource "azurerm_automation_schedule" "this" {
+  lifecycle {
+    ignore_changes = [start_time]
+  }
   name                    = "scheduleMaester"
   resource_group_name     = azurerm_resource_group.this.name
   automation_account_name = azurerm_automation_account.this.name
-  frequency               = "Month"
+  frequency               = title(var.run_schedule)
   interval                = 1
   start_time              = timeadd(timestamp(), "1h")
   expiry_time             = "9999-12-31T23:59:59.9999999+00:00"

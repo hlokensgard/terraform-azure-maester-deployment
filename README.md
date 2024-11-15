@@ -1,21 +1,24 @@
-# Terraform module for deploying Maester
-This terraform module deploys the Maester tool. It will create an automation account that runs the tool as a runbook and sends the report on email. 
-For more information about the tool, check out the [website](https://maester.dev/).
+# Terraform Module for Deploying Maester
+This Terraform module simplifies the deployment of the **Maester** tool, enabling you to quickly set it up in your Azure tenant. The primary goal is to provide valuable insights into the security of your Azure environment with minimal mandatory configuration. You can customize key settings as needed. For more information about Maester, [visit the official website](https://maester.dev/).
 
-# Prerequiteis 
-The module requres that you have a folder named `runbooks` and a file named `maester.ps1` on the same level as the `main.tf` file. 
-```
-- runbooks
-  - maester.ps1
-- main.tf
-- ...
-```
+## Prerequisites
+To use this module, you need to provide the `maester.ps1` script as input. You can find examples of how to run the script and the available functions on Maester's website.
+
+### Permissions
+Ensure you have access to a privileged role that can grant **Admin Consent** (e.g., Global Administrator) for the managed identity running the runbook. [For more details on granting Admin Consent, refer to the Microsoft documentation](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal).
+
+## Solution Overview
+This solution uses an **Azure Automation Account** to execute a runbook using the managed identity of the automation account. This setup allows you to evaluate your tenant based on the tests defined in your PowerShell script. Simply provide your script as input to the module to get started.
+
+
+
 
 # Example of use 
 ```
 module "maester-deployment" {
   source  = "hlokensgard/maester-deployment/azure"
   version = "~>1.0"
+  custom_configuration...
 }
 ```
 
@@ -69,11 +72,15 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_app_roles"></a> [app\_roles](#input\_app\_roles) | A map of app roles to assign to the managed identity for the automation account. This have as default every role you need to run Maester. But you need to give admin consent after assigning the roles. | `list(string)` | <pre>[<br/>  "Directory.Read.All",<br/>  "DirectoryRecommendations.Read.All",<br/>  "IdentityRiskEvent.Read.All",<br/>  "Policy.Read.All",<br/>  "Policy.Read.ConditionalAccess",<br/>  "PrivilegedAccess.Read.AzureAD",<br/>  "Reports.Read.All",<br/>  "RoleEligibilitySchedule.Read.Directory",<br/>  "RoleManagement.Read.Directory",<br/>  "RoleManagement.Read.All",<br/>  "SharePointTenantSettings.Read.All",<br/>  "UserAuthenticationMethod.Read.All",<br/>  "Mail.Send"<br/>]</pre> | no |
 | <a name="input_automation_account_name"></a> [automation\_account\_name](#input\_automation\_account\_name) | The name of the Automation account | `string` | `"aa-maester"` | no |
-| <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `""` | no |
+| <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `null` | no |
+| <a name="input_file_path"></a> [file\_path](#input\_file\_path) | The path to the file that will be uploaded to the storage account and used as the runbook. This should contain the Maester script. | `string` | `"runbooks/maester.ps1"` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group | `string` | `"rg-maester"` | no |
-| <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account | `string` | `"maester"` | no |
+| <a name="input_owner_of_entra_id_group"></a> [owner\_of\_entra\_id\_group](#input\_owner\_of\_entra\_id\_group) | The object id of the user that will be the owner of the Entra ID group that gives access to the web app. | `string` | `null` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group that will contain the resources | `string` | `"rg-maester"` | no |
+| <a name="input_run_schedule"></a> [run\_schedule](#input\_run\_schedule) | The schedule for the runbook. Valied inputs are day, week or month. The runbook will then once every day, week or month. | `string` | `"Month"` | no |
+| <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account. The name needs to be shorter then 19 characters, since a random integer is added to the storage account name. | `string` | `"maester"` | no |
 | <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name) | The name of the storage account | `string` | `"stgmaester"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resources | `map(string)` | <pre>{<br/>  "environment": "dev"<br/>}</pre> | no |
 
