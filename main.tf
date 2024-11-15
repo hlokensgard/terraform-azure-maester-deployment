@@ -91,7 +91,9 @@ resource "azurerm_automation_runbook" "this" {
 
 resource "azurerm_automation_schedule" "this" {
   lifecycle {
-    ignore_changes = [start_time]
+    ignore_changes = [
+      start_time
+    ]
   }
   name                    = "scheduleMaester"
   resource_group_name     = azurerm_resource_group.this.name

@@ -83,3 +83,24 @@ variable "owner_of_entra_id_group" {
   type        = string
   default     = null
 }
+
+variable "enable_web_app" {
+  description = "Enable the creation of the web app"
+  type        = bool
+  default     = true
+}
+
+variable "app_service_name" {
+  description = "The name of the App Service"
+  type        = string
+  default     = "app-maester"
+}
+
+variable "app_service_plan" {
+  description = "The configuration of the App Service Plan"
+  type        = map(string)
+  default = {
+    tier = "Basic"
+    size = "B1"
+  }
+}

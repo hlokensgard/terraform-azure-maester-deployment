@@ -50,7 +50,10 @@ No modules.
 | Name | Type |
 |------|------|
 | [azuread_app_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/app_role_assignment) | resource |
+| [azuread_application.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
 | [azuread_service_principal.msgraph](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
+| [azurerm_app_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service) | resource |
+| [azurerm_app_service_plan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_plan) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_job_schedule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_job_schedule) | resource |
 | [azurerm_automation_powershell72_module.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_powershell72_module) | resource |
@@ -60,12 +63,14 @@ No modules.
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.aa_blob_data_owner_storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.aa_contributor_storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
 | [azurerm_storage_blob.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob) | resource |
 | [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) | resource |
 | [random_integer.storage_account_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 | [time_sleep.wait_for_role_assignments](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
+| [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_storage_account_blob_container_sas.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account_blob_container_sas) | data source |
 
 ## Inputs
@@ -73,8 +78,11 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_app_roles"></a> [app\_roles](#input\_app\_roles) | A map of app roles to assign to the managed identity for the automation account. This have as default every role you need to run Maester. But you need to give admin consent after assigning the roles. | `list(string)` | <pre>[<br/>  "Directory.Read.All",<br/>  "DirectoryRecommendations.Read.All",<br/>  "IdentityRiskEvent.Read.All",<br/>  "Policy.Read.All",<br/>  "Policy.Read.ConditionalAccess",<br/>  "PrivilegedAccess.Read.AzureAD",<br/>  "Reports.Read.All",<br/>  "RoleEligibilitySchedule.Read.Directory",<br/>  "RoleManagement.Read.Directory",<br/>  "RoleManagement.Read.All",<br/>  "SharePointTenantSettings.Read.All",<br/>  "UserAuthenticationMethod.Read.All",<br/>  "Mail.Send"<br/>]</pre> | no |
+| <a name="input_app_service_name"></a> [app\_service\_name](#input\_app\_service\_name) | The name of the App Service | `string` | `"app-maester"` | no |
+| <a name="input_app_service_plan"></a> [app\_service\_plan](#input\_app\_service\_plan) | The configuration of the App Service Plan | `map(string)` | <pre>{<br/>  "size": "B1",<br/>  "tier": "Basic"<br/>}</pre> | no |
 | <a name="input_automation_account_name"></a> [automation\_account\_name](#input\_automation\_account\_name) | The name of the Automation account | `string` | `"aa-maester"` | no |
 | <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `null` | no |
+| <a name="input_enable_web_app"></a> [enable\_web\_app](#input\_enable\_web\_app) | Enable the creation of the web app | `bool` | `true` | no |
 | <a name="input_file_path"></a> [file\_path](#input\_file\_path) | The path to the file that will be uploaded to the storage account and used as the runbook. This should contain the Maester script. | `string` | `"runbooks/maester.ps1"` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
 | <a name="input_owner_of_entra_id_group"></a> [owner\_of\_entra\_id\_group](#input\_owner\_of\_entra\_id\_group) | The object id of the user that will be the owner of the Entra ID group that gives access to the web app. | `string` | `null` | no |

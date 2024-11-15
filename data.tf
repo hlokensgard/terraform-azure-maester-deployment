@@ -17,3 +17,5 @@ data "azurerm_storage_account_blob_container_sas" "this" {
     create = false
   }
 }
+
+data "azurerm_client_config" "this" {}
