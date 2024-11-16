@@ -104,3 +104,21 @@ variable "app_service_plan" {
     size = "B1"
   }
 }
+
+variable "enable_teams_integration" {
+  description = "Enable the integration with Microsoft Teams"
+  type        = bool
+  default     = false
+}
+
+variable "team_id" {
+  description = "The id of the Microsoft Team that will be used for receiving the reports"
+  type        = string
+  default     = null
+}
+
+variable "channel_id" {
+  description = "The id of the channel in the Microsoft Team that will be used for receiving the reports"
+  type        = string
+  default     = null
+}

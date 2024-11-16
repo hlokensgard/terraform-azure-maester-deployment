@@ -3,9 +3,12 @@ Connect-MgGraph -Identity
 
 # Get the variables
 $MailRecipient = (Get-AutomationVariable -Name "EmailAddress")
-$ResourceGroup = (Get-AutomationVariable -Name "ResourceGroup")
+$ResourceGroupName = (Get-AutomationVariable -Name "ResourceGroupName")
 $AppServiceName = (Get-AutomationVariable -Name "AppServiceName")
 $EnableWebApp = (Get-AutomationVariable -Name "EnableWebApp")
+$EnableTeamsIntegration = (Get-AutomationVariable -Name "EnableTeamsIntegration")
+$TeamId = (Get-AutomationVariable -Name "TeamId")
+$TeamChannelId = (Get-AutomationVariable -Name "TeamChannelId")
 
 # Create the date and file name
 $date = (Get-Date).ToString("yyyyMMdd-HHmm")
@@ -35,5 +38,10 @@ if ($EnableWebApp -eq "true") {
     Connect-AzAccount -Identity
 
     # Publish to Azure Web App
-    Publish-AzWebApp -ResourceGroupName $ResourceGroup -Name $AppServiceName -ArchivePath $FileName -Force
+    Publish-AzWebApp -ResourceGroupName $ResourceGroupName -Name $AppServiceName -ArchivePath $FileName -Force
+}
+
+if ($EnableTeamsIntegration -eq "true") {
+    Write-Output "EnableTeamsIntegration is true, running Maester for Teams"
+    Invoke-Maester -TeamId $TeamId -TeamChannelId $TeamChannelId
 }

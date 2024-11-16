@@ -10,7 +10,6 @@ resource "azurerm_role_assignment" "aa_contributor_storage_account" {
   principal_id         = azurerm_automation_account.this.identity[0].principal_id
 }
 
-
 data "azuread_application_published_app_ids" "well_known" {}
 
 resource "azuread_service_principal" "msgraph" {
@@ -30,5 +29,5 @@ resource "time_sleep" "wait_for_role_assignments" {
     azurerm_role_assignment.aa_contributor_storage_account,
     azurerm_role_assignment.aa_blob_data_owner_storage_account
   ]
-  create_duration = "180s"
+  create_duration = "240s"
 }

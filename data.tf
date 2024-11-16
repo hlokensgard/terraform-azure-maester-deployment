@@ -6,7 +6,7 @@ data "azurerm_storage_account_blob_container_sas" "this" {
   container_name    = azurerm_storage_container.this.name
   https_only        = true
   start             = timestamp()
-  expiry            = timeadd(timestamp(), "180s")
+  expiry            = timeadd(timestamp(), "360s")
 
   permissions {
     read   = true

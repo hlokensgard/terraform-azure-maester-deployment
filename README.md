@@ -28,18 +28,18 @@ module "maester-deployment" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~>1.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~>2.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~>3.0 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | ~>0.9 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~>3.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~>4.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | ~>0.12 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~>2.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~>3.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~>3.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~>4.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
-| <a name="provider_time"></a> [time](#provider\_time) | ~>0.9 |
+| <a name="provider_time"></a> [time](#provider\_time) | ~>0.12 |
 
 ## Modules
 
@@ -68,6 +68,7 @@ No modules.
 | [azurerm_storage_blob.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob) | resource |
 | [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) | resource |
 | [random_integer.storage_account_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
+| [random_pet.app_service_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [time_sleep.wait_for_role_assignments](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
@@ -81,7 +82,9 @@ No modules.
 | <a name="input_app_service_name"></a> [app\_service\_name](#input\_app\_service\_name) | The name of the App Service | `string` | `"app-maester"` | no |
 | <a name="input_app_service_plan"></a> [app\_service\_plan](#input\_app\_service\_plan) | The configuration of the App Service Plan | `map(string)` | <pre>{<br/>  "size": "B1",<br/>  "tier": "Basic"<br/>}</pre> | no |
 | <a name="input_automation_account_name"></a> [automation\_account\_name](#input\_automation\_account\_name) | The name of the Automation account | `string` | `"aa-maester"` | no |
+| <a name="input_channel_id"></a> [channel\_id](#input\_channel\_id) | The id of the channel in the Microsoft Team that will be used for receiving the reports | `string` | `null` | no |
 | <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `null` | no |
+| <a name="input_enable_teams_integration"></a> [enable\_teams\_integration](#input\_enable\_teams\_integration) | Enable the integration with Microsoft Teams | `bool` | `false` | no |
 | <a name="input_enable_web_app"></a> [enable\_web\_app](#input\_enable\_web\_app) | Enable the creation of the web app | `bool` | `true` | no |
 | <a name="input_file_path"></a> [file\_path](#input\_file\_path) | The path to the file that will be uploaded to the storage account and used as the runbook. This should contain the Maester script. | `string` | `"runbooks/maester.ps1"` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
@@ -91,8 +94,11 @@ No modules.
 | <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account. The name needs to be shorter then 19 characters, since a random integer is added to the storage account name. | `string` | `"maester"` | no |
 | <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name) | The name of the storage account | `string` | `"stgmaester"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resources | `map(string)` | <pre>{<br/>  "environment": "dev"<br/>}</pre> | no |
+| <a name="input_team_id"></a> [team\_id](#input\_team\_id) | The id of the Microsoft Team that will be used for receiving the reports | `string` | `null` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_default_site_hostname"></a> [default\_site\_hostname](#output\_default\_site\_hostname) | n/a |
 <!-- END_TF_DOCS -->
