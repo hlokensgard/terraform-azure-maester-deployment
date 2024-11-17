@@ -53,7 +53,7 @@ if ($EnableWebApp -eq "true") {
 if ($MailRecipient) {
     try {
         Write-Output "Sending email to $MailRecipient"
-        Invoke-Maester -MailRecipient $MailRecipient 
+        Invoke-Maester -MailUserId $MailRecipient -MailRecipient $MailRecipient -OutputFolder $TempOutputFolder 
         Write-Output "Email sent"
     } catch {
         Write-Output "Failed to send email to $MailRecipient"

@@ -1,12 +1,6 @@
-resource "azurerm_role_assignment" "aa_blob_data_owner_storage_account" {
+resource "azurerm_role_assignment" "aa_blob_data_reader_storage_account" {
   scope                = azurerm_storage_account.this.id
-  role_definition_name = "Storage Blob Data Owner"
-  principal_id         = azurerm_automation_account.this.identity[0].principal_id
-}
-
-resource "azurerm_role_assignment" "aa_contributor_storage_account" {
-  scope                = azurerm_storage_account.this.id
-  role_definition_name = "Contributor"
+  role_definition_name = "Storage Blob Data Reader"
   principal_id         = azurerm_automation_account.this.identity[0].principal_id
 }
 
@@ -26,8 +20,7 @@ resource "azuread_app_role_assignment" "this" {
 
 resource "time_sleep" "wait_for_role_assignments" {
   depends_on = [
-    azurerm_role_assignment.aa_contributor_storage_account,
-    azurerm_role_assignment.aa_blob_data_owner_storage_account
+    azurerm_role_assignment.aa_blob_data_reader_storage_account
   ]
   create_duration = "240s"
 }
