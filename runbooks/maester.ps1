@@ -4,11 +4,13 @@ Write-Output "Starting Maester runbook"
 Write-Output "Connecting to Microsoft Graph with MI"
 Connect-MgGraph -Identity
 
-# Get the variables
+# Get the AA variables
 $MailRecipient = (Get-AutomationVariable -Name "EmailAddress")
 $ResourceGroupName = (Get-AutomationVariable -Name "ResourceGroupName")
 $AppServiceName = (Get-AutomationVariable -Name "AppServiceName")
 $EnableWebApp = (Get-AutomationVariable -Name "EnableWebApp")
+$StorageAccountName = (Get-AutomationVariable -Name "StorageAccountName")
+$ContainerName = (Get-AutomationVariable -Name "ContainerName")
 
 # Create the date and file name
 $date = (Get-Date).ToString("yyyyMMdd-HHmm")

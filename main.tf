@@ -49,15 +49,7 @@ resource "azurerm_storage_account" "this" {
   https_traffic_only_enabled      = true
   shared_access_key_enabled       = true
   allow_nested_items_to_be_public = true
-
-  /*   network_rules {
-    default_action = "Allow"
-    bypass = [ "None" ]
-    ip_rules = [  ]
-    virtual_network_subnet_ids = [  ]
-  }
- */
-  tags = var.tags
+  tags                            = var.tags
 }
 
 resource "azurerm_storage_container" "this" {
@@ -67,11 +59,6 @@ resource "azurerm_storage_container" "this" {
 }
 
 resource "azurerm_storage_blob" "this" {
-  # Ensures that the blob is created after the role assignments
-  /*   depends_on = [
-    time_sleep.wait_for_role_assignments
-  ]
- */
   name                   = "maester"
   storage_account_name   = azurerm_storage_account.this.name
   storage_container_name = azurerm_storage_container.this.name
@@ -92,9 +79,6 @@ resource "azurerm_automation_runbook" "this" {
 
   publish_content_link {
     uri = "https://${azurerm_storage_account.this.name}.blob.core.windows.net/${azurerm_storage_container.this.name}/${azurerm_storage_blob.this.name}${data.azurerm_storage_account_blob_container_sas.this.sas}"
-    #uri = "https://${azurerm_storage_account.this.name}.blob.core.windows.net/${azurerm_storage_container.this.name}/${azurerm_storage_blob.this.name}${data.azurerm_storage_account_blob_container_sas.this.sas}"
-    #uri = "https://stgmaester55183.blob.core.windows.net/maester?sp=r&st=2024-11-16T19:48:08Z&se=2024-11-17T03:48:08Z&spr=https&sv=2022-11-02&sr=c&sig=PAArDZ%2FYXDF9huDv5m%2F3qXd8rzvHSaBLblRvJp9njxE%3D"
-    #uri = "https://stgmaester55183.blob.core.windows.net/maester/maester?sp=r&st=2024-11-16T19:49:23Z&se=2024-11-17T03:49:23Z&spr=https&sv=2022-11-02&sr=b&sig=pwTgA%2FcxzCqmNZ6tzY832s2HXbH4GjP1N7s4tG7%2BtEs%3D"
   }
 }
 

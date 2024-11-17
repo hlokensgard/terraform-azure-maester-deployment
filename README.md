@@ -80,12 +80,12 @@ No modules.
 | <a name="input_app_roles"></a> [app\_roles](#input\_app\_roles) | A map of app roles to assign to the managed identity for the automation account. This have as default every role you need to run Maester. But you need to give admin consent after assigning the roles. | `list(string)` | <pre>[<br/>  "Directory.Read.All",<br/>  "DirectoryRecommendations.Read.All",<br/>  "IdentityRiskEvent.Read.All",<br/>  "Policy.Read.All",<br/>  "Policy.Read.ConditionalAccess",<br/>  "PrivilegedAccess.Read.AzureAD",<br/>  "Reports.Read.All",<br/>  "RoleEligibilitySchedule.Read.Directory",<br/>  "RoleManagement.Read.Directory",<br/>  "RoleManagement.Read.All",<br/>  "SharePointTenantSettings.Read.All",<br/>  "UserAuthenticationMethod.Read.All",<br/>  "Mail.Send"<br/>]</pre> | no |
 | <a name="input_app_service_name"></a> [app\_service\_name](#input\_app\_service\_name) | The name of the App Service | `string` | `"app-maester"` | no |
 | <a name="input_app_service_plan"></a> [app\_service\_plan](#input\_app\_service\_plan) | The configuration of the App Service Plan | `map(string)` | <pre>{<br/>  "size": "B1",<br/>  "tier": "Basic"<br/>}</pre> | no |
+| <a name="input_app_service_plan_name"></a> [app\_service\_plan\_name](#input\_app\_service\_plan\_name) | The name of the App Service Plan | `string` | `"maester-app-service-plan"` | no |
 | <a name="input_automation_account_name"></a> [automation\_account\_name](#input\_automation\_account\_name) | The name of the Automation account | `string` | `"aa-maester"` | no |
 | <a name="input_email_address"></a> [email\_address](#input\_email\_address) | The email address of the user that will receive the reports | `string` | `null` | no |
 | <a name="input_enable_web_app"></a> [enable\_web\_app](#input\_enable\_web\_app) | Enable the creation of the web app | `bool` | `true` | no |
 | <a name="input_file_path"></a> [file\_path](#input\_file\_path) | The path to the file that will be uploaded to the storage account and used as the runbook. This should contain the Maester script. | `string` | `"runbooks/maester.ps1"` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
-| <a name="input_owner_of_entra_id_group"></a> [owner\_of\_entra\_id\_group](#input\_owner\_of\_entra\_id\_group) | The object id of the user that will be the owner of the Entra ID group that gives access to the web app. | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group that will contain the resources | `string` | `"rg-maester"` | no |
 | <a name="input_run_schedule"></a> [run\_schedule](#input\_run\_schedule) | The schedule for the runbook. Valied inputs are day, week or month. The runbook will then once every day, week or month. | `string` | `"Month"` | no |
 | <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account. The name needs to be shorter then 19 characters, since a random integer is added to the storage account name. | `string` | `"maester"` | no |
@@ -96,5 +96,11 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_default_site_hostname"></a> [default\_site\_hostname](#output\_default\_site\_hostname) | n/a |
+| <a name="output_app_service"></a> [app\_service](#output\_app\_service) | n/a |
+| <a name="output_automation_account"></a> [automation\_account](#output\_automation\_account) | n/a |
+| <a name="output_azuread_application"></a> [azuread\_application](#output\_azuread\_application) | n/a |
+| <a name="output_blob"></a> [blob](#output\_blob) | n/a |
+| <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | n/a |
+| <a name="output_storage_account"></a> [storage\_account](#output\_storage\_account) | n/a |
+| <a name="output_storage_container"></a> [storage\_container](#output\_storage\_container) | n/a |
 <!-- END_TF_DOCS -->

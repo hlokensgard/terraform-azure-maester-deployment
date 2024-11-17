@@ -78,16 +78,16 @@ variable "run_schedule" {
   default = "Month"
 }
 
-variable "owner_of_entra_id_group" {
-  description = "The object id of the user that will be the owner of the Entra ID group that gives access to the web app."
-  type        = string
-  default     = null
-}
-
 variable "enable_web_app" {
   description = "Enable the creation of the web app"
   type        = bool
   default     = true
+}
+
+variable "app_service_plan_name" {
+  description = "The name of the App Service Plan"
+  type        = string
+  default     = "maester-app-service-plan"
 }
 
 variable "app_service_name" {

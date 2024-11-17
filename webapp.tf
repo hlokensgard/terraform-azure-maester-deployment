@@ -1,6 +1,6 @@
 resource "azurerm_app_service_plan" "this" {
   count               = var.enable_web_app ? 1 : 0
-  name                = "maester-app-service-plan"
+  name                = var.app_service_plan_name
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   sku {
@@ -37,8 +37,6 @@ resource "azurerm_app_service" "this" {
 
     active_directory {
       client_id = azuread_application.this[0].client_id
-      #client_secret = azuread_application_password.this.value
-      #allowed_audiences = ["api://${azuread_service_principal.msgraph.object_id}"]
     }
   }
 }
