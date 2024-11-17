@@ -24,18 +24,6 @@ locals {
       "description" = "Enable the Web App"
       "value"       = var.enable_web_app
     }
-    "EnableTeamsIntegration" = {
-      "description" = "Enable the Teams integration"
-      "value"       = var.enable_teams_integration
-    }
-    "TeamId" = {
-      "description" = "The id of the Microsoft Team that will be used for receiving the reports"
-      "value"       = var.team_id
-    }
-    "ChannelId" = {
-      "description" = "The id of the channel in the Microsoft Team that will be used for receiving the reports"
-      "value"       = var.channel_id
-    }
   }
 }
 
