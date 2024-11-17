@@ -2,7 +2,7 @@
 This Terraform module simplifies the deployment of the **Maester** tool, enabling you to quickly set it up in your Azure tenant. The primary goal is to provide valuable insights into the security of your Azure environment with minimal mandatory configuration. You can customize key settings as needed. For more information about Maester, [visit the official website](https://maester.dev/).
 
 ## Prerequisites
-To use this module, you need to provide the `maester.ps1` script as input. You can find examples of how to run the script and the available functions on Maester's website.
+To use this module, you need to provide the `maester.ps1` script as input. You can find examples of how to run the script and the available functions on Maester's website. [There is also an example here](runbooks/maester.ps1)
 
 ### Permissions
 Ensure you have access to a privileged role that can grant **Admin Consent** (e.g., Global Administrator) for the managed identity running the runbook. [For more details on granting Admin Consent, refer to the Microsoft documentation](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal).
@@ -10,17 +10,20 @@ Ensure you have access to a privileged role that can grant **Admin Consent** (e.
 ## Solution Overview
 This solution uses an **Azure Automation Account** to execute a runbook using the managed identity of the automation account. This setup allows you to evaluate your tenant based on the tests defined in your PowerShell script. Simply provide your script as input to the module to get started.
 
+### Web app 
+The module provides the option to set up an web application to display the report from `Maester`. The web app is configured to only allow members of my organization access. 
 
+# Possible further improvements 
+- Increase the security of the storage account
+- Restrict access to the web application
+- Implement other deployment options that are supported by `Maester`. Such as
+   - Azure DevOps integration
+   - Slack integration
+   - GitHub integration
 
 
 # Example of use 
-```
-module "maester-deployment" {
-  source  = "hlokensgard/maester-deployment/azure"
-  version = "~>1.0"
-  custom_configuration...
-}
-```
+[Examples can be found here](examples/main.tf)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
