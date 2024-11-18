@@ -4,7 +4,6 @@ resource "azurerm_resource_group" "this" {
   tags     = var.tags
 }
 
-
 resource "azurerm_automation_account" "this" {
   name                = var.automation_account_name
   resource_group_name = azurerm_resource_group.this.name
@@ -38,20 +37,18 @@ resource "azurerm_storage_account" "this" {
       name
     ]
   }
-  name                          = "${var.storage_account_name}${random_integer.storage_account_suffix.result}"
-  resource_group_name           = azurerm_resource_group.this.name
-  location                      = azurerm_resource_group.this.location
-  account_tier                  = "Standard"
-  account_replication_type      = "LRS"
-  account_kind                  = "StorageV2"
-  access_tier                   = "Hot"
-  public_network_access_enabled = true
-
-  network_rules {
-    default_action = "Allow"
-  }
-
-  tags = var.tags
+  name                            = "${var.storage_account_name}${random_integer.storage_account_suffix.result}"
+  resource_group_name             = azurerm_resource_group.this.name
+  location                        = azurerm_resource_group.this.location
+  account_tier                    = "Standard"
+  account_replication_type        = "LRS"
+  account_kind                    = "StorageV2"
+  access_tier                     = "Hot"
+  public_network_access_enabled   = true
+  https_traffic_only_enabled      = true
+  shared_access_key_enabled       = true
+  allow_nested_items_to_be_public = true
+  tags                            = var.tags
 }
 
 resource "azurerm_storage_container" "this" {
@@ -61,21 +58,16 @@ resource "azurerm_storage_container" "this" {
 }
 
 resource "azurerm_storage_blob" "this" {
-  # Ensures that the blob is created after the role assignments
-  depends_on = [
-    time_sleep.wait_for_role_assignments
-  ]
-
-  name                   = "Maester.ps1"
+  name                   = "maester"
   storage_account_name   = azurerm_storage_account.this.name
   storage_container_name = azurerm_storage_container.this.name
   type                   = "Block"
-  source                 = "runbooks/maester.ps1"
-  content_md5            = filemd5("runbooks/maester.ps1")
+  source                 = var.file_path
+  content_md5            = filemd5(var.file_path)
 }
 
 resource "azurerm_automation_runbook" "this" {
-  name                    = "Maester"
+  name                    = "maester"
   location                = azurerm_resource_group.this.location
   resource_group_name     = azurerm_resource_group.this.name
   automation_account_name = azurerm_automation_account.this.name
@@ -90,10 +82,15 @@ resource "azurerm_automation_runbook" "this" {
 }
 
 resource "azurerm_automation_schedule" "this" {
+  lifecycle {
+    ignore_changes = [
+      start_time
+    ]
+  }
   name                    = "scheduleMaester"
   resource_group_name     = azurerm_resource_group.this.name
   automation_account_name = azurerm_automation_account.this.name
-  frequency               = "Month"
+  frequency               = title(var.run_schedule)
   interval                = 1
   start_time              = timeadd(timestamp(), "1h")
   expiry_time             = "9999-12-31T23:59:59.9999999+00:00"

@@ -12,6 +12,18 @@ locals {
       "description" = "The name of the storage account container"
       "value"       = azurerm_storage_container.this.name
     }
+    "ResourceGroupName" = {
+      "description" = "The name of the resource group"
+      "value"       = azurerm_resource_group.this.name
+    }
+    "AppServiceName" = {
+      "description" = "The name of the App Service"
+      "value"       = var.enable_web_app ? azurerm_app_service.this[0].name : null
+    }
+    "EnableWebApp" = {
+      "description" = "Enable the Web App"
+      "value"       = var.enable_web_app
+    }
   }
 }
 

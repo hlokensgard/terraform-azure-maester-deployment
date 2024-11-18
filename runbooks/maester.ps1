@@ -1,11 +1,18 @@
-#Connect to Microsoft Graph with Mi
+Write-Output "Starting Maester runbook"
+
+#Connect to Microsoft Graph with MI
+Write-Output "Connecting to Microsoft Graph with MI"
 Connect-MgGraph -Identity
 
-#Define mail recipient
-
+# Get the AA variables
 $MailRecipient = (Get-AutomationVariable -Name "EmailAddress")
+$ResourceGroupName = (Get-AutomationVariable -Name "ResourceGroupName")
+$AppServiceName = (Get-AutomationVariable -Name "AppServiceName")
+$EnableWebApp = (Get-AutomationVariable -Name "EnableWebApp")
+$StorageAccountName = (Get-AutomationVariable -Name "StorageAccountName")
+$ContainerName = (Get-AutomationVariable -Name "ContainerName")
 
-#create output folder
+# Create the date and file name
 $date = (Get-Date).ToString("yyyyMMdd-HHmm")
 $FileName = "MaesterReport" + $Date + ".zip"
 
@@ -14,12 +21,44 @@ if (!(Test-Path $TempOutputFolder -PathType Container)) {
     New-Item -ItemType Directory -Force -Path $TempOutputFolder
 }
 
-#Run Maester report
+# Run Maester report
 cd $env:TEMP
 md maester-tests
 cd maester-tests
+Write-Output "Installing MaesterTests module"
 Install-MaesterTests .\tests
-Write-Output "Running Maester tests"
-Write-Output "Sending report to $MailRecipient"
-Invoke-Maester -MailUserId $MailRecipient -MailRecipient $MailRecipient -OutputFolder $TempOutputFolder
-Write-Output "Maester tests completed"
+
+# This is just added as examples of how to run Maester with different options
+# You can ignore this and just run Invoke-Maester with the desired options
+if ($EnableWebApp -eq "true") {
+    try {
+        Write-Output "EnableWebApp is true, running Maester for HTML page"
+        Invoke-Maester -OutputHtmlFile "$TempOutputFolder\index.html"
+
+        # Create the zip file
+        Compress-Archive -Path "$TempOutputFolder\*" -DestinationPath $FileName
+
+        # Connect Az Account using MI
+        Connect-AzAccount -Identity
+
+        # Publish to Azure Web App
+        Write-Output "Publishing to Azure Web App"
+        Publish-AzWebApp -ResourceGroupName $ResourceGroupName -Name $AppServiceName -ArchivePath $FileName -Force
+        Write-Output "Published to Azure Web App"
+    } catch {
+        Write-Output "Failed to publish to Azure Web App"
+        Write-Output $_
+    }
+}
+
+# Send the email
+if ($MailRecipient) {
+    try {
+        Write-Output "Sending email to $MailRecipient"
+        Invoke-Maester -MailUserId $MailRecipient -MailRecipient $MailRecipient -OutputFolder $TempOutputFolder 
+        Write-Output "Email sent"
+    } catch {
+        Write-Output "Failed to send email to $MailRecipient"
+        Write-Output $_
+    }
+}
