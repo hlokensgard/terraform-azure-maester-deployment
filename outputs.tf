@@ -6,18 +6,6 @@ output "automation_account" {
   value = azurerm_automation_account.this
 }
 
-output "storage_account" {
-  value = azurerm_storage_account.this
-}
-
-output "storage_container" {
-  value = azurerm_storage_container.this
-}
-
-output "blob" {
-  value = azurerm_storage_blob.this
-}
-
 output "azuread_application" {
   value = var.enable_web_app ? azuread_application.this[0] : null
 }
