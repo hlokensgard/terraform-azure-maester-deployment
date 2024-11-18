@@ -20,6 +20,7 @@ The module provides the option to set up an web application to display the repor
    - Azure DevOps integration
    - Slack integration
    - GitHub integration
+- Option for storing the report in a dedicated storage account
 
 
 # Example of use 
