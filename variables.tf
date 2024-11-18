@@ -18,18 +18,6 @@ variable "tags" {
   }
 }
 
-variable "storage_account_name" {
-  description = "The name of the storage account"
-  type        = string
-  default     = "stgmaester"
-}
-
-variable "storage_account_blob_name" {
-  description = "The name of the blob container in the storage account. The name needs to be shorter then 19 characters, since a random integer is added to the storage account name."
-  type        = string
-  default     = "maester"
-}
-
 variable "automation_account_name" {
   description = "The name of the Automation account"
   type        = string

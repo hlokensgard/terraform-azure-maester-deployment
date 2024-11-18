@@ -14,9 +14,8 @@ This solution uses an **Azure Automation Account** to execute a runbook using th
 The module provides the option to set up an web application to display the report from `Maester`. The web app is configured to only allow members of my organization access. 
 
 # Possible further improvements 
-- Increase the security of the storage account
 - Restrict access to the web application
-- Implement other deployment options that are supported by `Maester`. Such as
+- Implement other deployment options that are supported by `Maester`. Such as:
    - Azure DevOps integration
    - Slack integration
    - GitHub integration
@@ -42,8 +41,8 @@ The module provides the option to set up an web application to display the repor
 |------|---------|
 | <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~>3.0 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~>4.0 |
+| <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
-| <a name="provider_time"></a> [time](#provider\_time) | ~>0.12 |
 
 ## Modules
 
@@ -65,17 +64,11 @@ No modules.
 | [azurerm_automation_schedule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
 | [azurerm_automation_variable_string.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_role_assignment.aa_blob_data_reader_storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
-| [azurerm_storage_blob.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob) | resource |
-| [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) | resource |
-| [random_integer.storage_account_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 | [random_pet.app_service_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
-| [time_sleep.wait_for_role_assignments](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
-| [azurerm_storage_account_blob_container_sas.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account_blob_container_sas) | data source |
+| [local_file.powershell_runbook](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
@@ -92,8 +85,6 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"westeurope"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group that will contain the resources | `string` | `"rg-maester"` | no |
 | <a name="input_run_schedule"></a> [run\_schedule](#input\_run\_schedule) | The schedule for the runbook. Valied inputs are day, week or month. The runbook will then once every day, week or month. | `string` | `"Month"` | no |
-| <a name="input_storage_account_blob_name"></a> [storage\_account\_blob\_name](#input\_storage\_account\_blob\_name) | The name of the blob container in the storage account. The name needs to be shorter then 19 characters, since a random integer is added to the storage account name. | `string` | `"maester"` | no |
-| <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name) | The name of the storage account | `string` | `"stgmaester"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resources | `map(string)` | <pre>{<br/>  "environment": "dev"<br/>}</pre> | no |
 
 ## Outputs
@@ -103,8 +94,5 @@ No modules.
 | <a name="output_app_service"></a> [app\_service](#output\_app\_service) | n/a |
 | <a name="output_automation_account"></a> [automation\_account](#output\_automation\_account) | n/a |
 | <a name="output_azuread_application"></a> [azuread\_application](#output\_azuread\_application) | n/a |
-| <a name="output_blob"></a> [blob](#output\_blob) | n/a |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | n/a |
-| <a name="output_storage_account"></a> [storage\_account](#output\_storage\_account) | n/a |
-| <a name="output_storage_container"></a> [storage\_container](#output\_storage\_container) | n/a |
 <!-- END_TF_DOCS -->

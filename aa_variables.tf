@@ -4,14 +4,6 @@ locals {
       "description" = "The email address of the user that will receive the reports"
       "value"       = var.email_address
     }
-    "StorageAccountName" = {
-      "description" = "The name of the storage account"
-      "value"       = azurerm_storage_account.this.name
-    }
-    "ContainerName" = {
-      "description" = "The name of the storage account container"
-      "value"       = azurerm_storage_container.this.name
-    }
     "ResourceGroupName" = {
       "description" = "The name of the resource group"
       "value"       = azurerm_resource_group.this.name
